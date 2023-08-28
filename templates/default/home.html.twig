@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home Page{% endblock %}
+
+{# {% block head %}
+    {{ parent() }}
+{% endblock %} #}
+
+{# {% set route_name = app.request.attributes.get('_route') %} #}
+
+{# {% block navigation %}
+    
+{% endblock %} #}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+      <section class="content-header">
+
+        <h1>Backend Support {% if is_granted("ROLE_STATISTIC") %}| Willkommen{% endif %}</h1>
+        <br>
+
+        {% if app.user==null %} 
+          <h4>Bitte login für Nutzung</h4>
+        {% endif %}
+
+        {% if app.user %} 
+          <div>
+            {# <p>Hallo <b>{{ app.user.username }} (userID: {{ app.user.userid }})</b> Sie haben sich angemeldet</p> #}
+            <p>Hallo <b>{{ app.user.username }}</b>, Sie haben sich angemeldet</p>
+            {# <p>Your email={{ app.user.email }} </p> #}
+          </div>
+        {% endif %}
+        
+        {% if is_granted("ROLE_ADMIN") %} 
+          <div>
+            <p>als Admin</p>
+            {# <p>Your email={{ app.user.email }} </p> #}
+          </div>
+        {% endif %}
+
+        {% if is_granted("ROLE_SUPPORT") %} 
+          <div>
+            <p>als Supporter</p>
+            {# <p>Your email={{ app.user.email }} </p> #}
+          </div>
+        {% endif %}
+
+        {% if is_granted("ROLE_STATISTIC") %} 
+          <div>
+            <p>als StatisticViewer</p>
+            {# <p>Your email={{ app.user.email }} </p> #}
+          </div>
+        {% endif %}
+
+      </section>
+      <!-- Main content -->
+      <!-- /.Main content -->
+    </div>
+  <!-- /.content-wrapper -->
+{% endblock %}
+
+{# {% block footer %}
+    {{ parent() }}
+{% endblock %} #}

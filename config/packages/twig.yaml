@@ -1,5 +1,9 @@
 twig:
-    default_path: '%kernel.project_dir%/templates'
+    default_path: '%kernel.project_dir%/templates' 
+
+    globals:
+        #pathToWeb: "%kernel.project_dir%/public"
+        main_menu: "@main_menu"
 
 when@test:
     twig:

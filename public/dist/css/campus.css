@@ -1,0 +1,120 @@
+html {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+#my-container {
+    background-image: linear-gradient(
+      to right bottom,
+      #002d62,
+      #2d4c7c,
+      #516d97,
+      #7590b1,
+      #7590b1,
+      #a0c8f2,
+      #a0c8f2,
+      #7590b1,
+      #7590b1,
+      #516d97,
+      #2d4c7c,
+      #002d62
+    );
+    min-height: 100vh;
+}
+
+/* .content-wrapper{
+    background-image: linear-gradient(90deg,#002d62,#0072bc);
+} */
+
+.my-container{
+    /* margin: 0 3rem; */
+}
+
+#my-container .section-top {
+    background-color: #f2f8fc!important;
+    padding: 0.3rem 3rem!important;
+    margin-bottom: 1rem;
+    color: #002e66;
+}
+
+#my-container .section-bottom {
+    background-color: #f2f8fc;
+    padding: 1.5rem 3rem;
+    color: #002e66;
+    font-size: 16px;
+}
+#my-container .f-color-1{
+    color: #002e66;
+    font-size: 22px!important;
+    font-weight: 600;
+}
+
+#my-container .form-control{
+    color: #0792b7!important;
+    font-size: 1rem!important;
+    height: 2.6rem;
+} 
+
+#my-container .btn{
+    background-color: #002d62;
+    border-color: #002d62;
+    color: #fff;
+    padding: .5rem .75rem;
+    margin: 1rem 0;
+    float: right;
+    width: 50%;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.btn_{
+    width: 40%;
+}
+#my-container .box{
+    background-color: #f2f8fc; 
+    border: none!important;
+    box-shadow: none;
+}
+
+#my-container input[type=checkbox] {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: 1rem;
+}
+.submitBtn{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#my-container .table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #cfe3f8;
+    color: #002d62;
+}
+#my-container .table-striped>tbody>tr:nth-of-type(even) {
+    background-color: #ffffff;
+    color: #002d62;
+} 
+#my-container #example1_wrapper :first-child{
+    margin-bottom: 0.2rem;
+}
+#my-container #example1_wrapper :last-child{
+    margin-top: 0.2rem;
+}
+
+
+@media (max-width: 992px) {
+    .my-container{
+        margin: 1rem;
+    }
+    #my-container .section{
+        padding: 1rem 1rem;
+    }
+    #my-container .btn, .btn_{
+        float: none;
+        width: 100%;
+    }
+    #my-container .box-body{
+        overflow-x:auto;
+    }
+}

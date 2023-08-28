@@ -1,19 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html> 
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <title>{% block title %}{% endblock %}</title>
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins -->
+        <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
+        <!-- Google Font -->
+        {# <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> #}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+        {% block head %}
+            {# <link rel="stylesheet" href="style.css"/> #}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <header class="main-header">
+                <!-- Logo -->
+                <a href="/home" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    {# <span class="logo-mini"><b>ivd24</b></span> #}
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg"><b>Support</b>Backend</span>
+                </a>
+
+                <!-- Header Navbar: style can be found in header.less -->
+                <nav class="navbar navbar-static-top">
+                    <!-- Sidebar toggle button-->
+                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        {# <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span> #}
+                    </a>
+                    {% if is_granted("ROLE_SUPPORT") %}
+                        <ul class="nav navbar-nav">
+                            {% for item in main_menu.getItems() %}
+                                <li class="nav-item d-none d-sm-inline-block">
+                                    <a href="{{ path(item.path) }}" class="nav-link">{{ item.label }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </nav>
+                
+            </header>
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar">
+                <!-- sidebar: style can be found in sidebar.less -->
+                {% block navigation %}
+                <section class="sidebar">
+
+                    <ul class="sidebar-menu" data-widget="tree">
+
+                        {% set route_name = app.request.attributes.get('_route') %}
+                        {% if app.user %}
+                            <li><a href="/logout"><i class="fa fa-circle-o"></i>Logout</a></li>
+                        {% else %}
+                            <li {% if route_name == "login" %} class="active"{% endif %}><a href="/login"><i class="fa fa-circle-o"></i>Login</a></li>
+                        {% endif %}
+                        
+                        <li class="treeview {% if route_name in ["default_home", "lead_test"] %}active{% endif %}">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i> 
+                                <span>Public</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li {% if route_name == "default_home" %} class="active"{% endif %}><a href="{{ path('default_home') }}"><i class="fa fa-circle-o"></i>Home Page</a></li>
+                                <li {% if route_name == "location_search" %} class="active"{% endif %}><a href="{{ path('location_search') }}"><i class="fa fa-circle-o"></i>Location</a></li>
+                            </ul>
+                        </li>
+
+                        {% if is_granted("ROLE_SUPPORT") %}
+	                        <li class="treeview {% if route_name in ["template_list", "template_new", "template_edit", "template_delete"] %}active{% endif %}">
+                                <a href="#">
+                                    <i class="fa fa-edit"></i> 
+                                    <span>TemplateManager</span>
+                                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li {% if route_name in ["template_new"] %} class="active"{% endif %}><a href="{{ path('template_new') }}"><i class="fa fa-circle-o"></i>Template anlegen</a></li>
+                                    <li {% if route_name in ["template_list", "template_edit", "template_delete"] %} class="active"{% endif %}><a href="{{ path('template_list') }}"><i class="fa fa-circle-o"></i>Template Liste</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li class="treeview {% if route_name in ["supporter_new", "supporter_list", "supporter_edit", "supporter_delete", "statisticuser_new", "statisticuser_list", "statisticuser_edit", "statisticuser_delete"] %}active{% endif %}">
+                                <a href="#">
+                                <i class="fa fa-edit"></i>
+                                <span>Admin Elemente</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li {% if route_name == "supporter_new" %} class="active"{% endif %}><a href="{{ path('supporter_new') }}"><i class="fa fa-circle-o"></i>Supporter anlegen</a></li>
+                                    <li {% if route_name in ["supporter_list", "supporter_edit", "supporter_delete"] %} class="active"{% endif %}><a href="{{ path('supporter_list') }}"><i class="fa fa-circle-o"></i>Supporter Liste</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+
+                </section>
+                {% endblock %}
+            <!-- /.sidebar -->
+            </aside>
+
+            {% block content %}
+            {% endblock %}
+
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 1.0
+                </div>
+                <strong>Copyright &copy; 2023 <a href="https://www.immobilie1.de">Hong Le Nguyen</a>.</strong> All rights reserved.
+            </footer>
+            <div class="control-sidebar-bg"></div>
+        </div>
+        <!-- ./wrapper -->
+        {% block footer %} 
+            <!-- jQuery 3 -->
+            <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+            <!-- Bootstrap 3.3.7 -->
+            <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+            <!-- FastClick -->
+            <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+            <!-- SlimScroll -->
+            {# <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script> #}
+            <!-- CK Editor -->
+            {# <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}"></script> #}
+            <!-- AdminLTE App -->
+            <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+
+        {% endblock %}
+        {# </div> #}
+        {% block zusatz %} 
+        {% endblock %}
     </body>
 </html>
